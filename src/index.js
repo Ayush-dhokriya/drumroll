@@ -6,9 +6,14 @@ class App extends React.Component {
     keys: ["Q", "W", "E", "A", "S", "D", "Z", "X", "C"],
   };
   render() {
+    const { keys } = this.state;
     return (
-      <div id="drum-machine">
-        <div id="display"></div>
+      <div id="drum-machine" className="container">
+        <div id="display" class="display">
+          {keys.map((key, idx) => (
+            <Box text={key} key={idx} />
+          ))}
+        </div>
       </div>
     );
   }
