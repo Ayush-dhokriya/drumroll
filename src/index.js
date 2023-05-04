@@ -1,5 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
+
+const container = document.getElementById("root");
+const root = createRoot(container);
 
 const sounds = [
   {
@@ -44,7 +47,7 @@ const App = (props) => (
   <div id="drum-machine" className="container">
     <div id="display" className="display">
       {sounds.map((sound, idx) => (
-        <Box text={sound.key} key={idx} audio={sound.mp3} />
+        <Box text={sound.key} key={idx} audio={sound.sound} />
       ))}
     </div>
   </div>
@@ -70,4 +73,18 @@ class Box extends React.Component {
   }
 }
 
-ReactDOM.render(<App keys={keys} />, document.getElementById("root"));
+document.addEventListener("keydown", (e) => {
+  const id = e.key.toUpperCase();
+  const audio = document.getElementById(id);
+
+  if (audio) {
+    const parent = audio.parentNode;
+    parent.classList.add("active");
+    audio.play();
+
+    audio.addEventListener("ended", () => {
+      parent.classList.remove("active");
+    });
+  }
+});
+root.render(<App tab="home" />);
